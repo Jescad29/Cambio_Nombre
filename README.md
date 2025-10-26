@@ -524,6 +524,10 @@ Posibles funcionalidades a agregar:
 
 ---
 
+
+<img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXByYTViN2FhZTN3OWg5N2N0cTJmYWQ1cjhzcHFjZXFyOHJldnVuYSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TY6lSlGuTVNdK/giphy.gif" alt="Perrito divertido" width="300"/>
+
+
 **Desarrollado con ❤️ usando Python**
 
 *Última actualización: Octubre 2025*
