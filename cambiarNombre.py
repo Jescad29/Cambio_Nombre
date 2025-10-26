@@ -1,3 +1,4 @@
+from config import my_directory_path, my_prefix
 import os
 
 def change_names(directory_path, prefix):
@@ -12,9 +13,28 @@ def change_names(directory_path, prefix):
         bool: True si se completó exitosamente, False si hubo errores
     """
     
+    # Validación 0: Verificar que los parámetros no sean None
+    if directory_path is None:
+        print("❌ ERROR CRÍTICO: directory_path es None")
+        print("\n📋 Esto significa que MY_DIRECTORY_PATH no se cargó del archivo .env")
+        print("\nPasos para solucionar:")
+        print("1. Verifica que existe el archivo .env en el directorio del proyecto")
+        print("2. Abre .env y verifica que contiene:")
+        print("   MY_DIRECTORY_PATH=C:/tu/ruta/aqui")
+        print("   (sin espacios alrededor del =)")
+        print("3. Asegúrate de que el nombre es exactamente MY_DIRECTORY_PATH")
+        print("4. Usa barras / o dobles barras \\\\")
+        return False
+    
+    if prefix is None or prefix.strip() == '':
+        print("⚠️ Advertencia: prefix está vacío. Usando 'archivo' por defecto.")
+        prefix = "archivo"
+    
     # Validación 1: Verificar que el directorio existe
     if not os.path.exists(directory_path):
         print(f"❌ Error: El directorio '{directory_path}' no existe.")
+        print(f"\nVerifica que la ruta es correcta:")
+        print(f"   Ruta actual: {directory_path}")
         return False
     
     # Validación 2: Verificar que es un directorio y no un archivo
@@ -33,6 +53,8 @@ def change_names(directory_path, prefix):
         # Validación 3: Verificar que hay archivos para renombrar
         if not files:
             print("⚠️ Advertencia: No se encontraron archivos en el directorio.")
+            print(f"   Directorio: {directory_path}")
+            print(f"   Contenido encontrado: {all_items if all_items else 'vacío'}")
             return False
         
         print(f"📁 Se encontraron {len(files)} archivo(s) para renombrar.\n")
@@ -101,16 +123,37 @@ def change_names(directory_path, prefix):
         return False
 
 
-# Ejemplo de uso con validación de entrada
 if __name__ == "__main__":
-    # Configuración
-    directory_path = 'C:/Users/user/Desktop/videosYT/cambionombre'
-    prefix = 'megustaelbrocoli'
+    print("\n" + "="*60)
+    print("🔄 RENOMBRADOR DE ARCHIVOS")
+    print("="*60 + "\n")
+    
+    # Usar configuración desde config.py
+    directory_path = my_directory_path
+    prefix = my_prefix
+    
+    print(f"📋 Configuración:")
+    print(f"   Directorio: {directory_path}")
+    print(f"   Prefijo: {prefix}\n")
+    
+    # Validación antes de ejecutar
+    if directory_path is None:
+        print("\n" + "="*60)
+        print("❌ ERROR DE CONFIGURACIÓN")
+        print("="*60)
+        print("\nNO se pudo cargar MY_DIRECTORY_PATH del archivo .env")
+        print("\nRevisa el output de config.py arriba ⬆️")
+        print("="*60)
+        input("\nPresiona Enter para salir...")
+        exit(1)
     
     # Ejecutar el renombrado
+    print("🚀 Iniciando proceso de renombrado...\n")
     success = change_names(directory_path, prefix)
     
     if success:
         print("\n🎉 ¡Operación finalizada con éxito!")
     else:
         print("\n⚠️ La operación se completó con advertencias o errores.")
+    
+    input("\nPresiona Enter para salir...")
